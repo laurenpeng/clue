@@ -24,12 +24,12 @@
 
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="logo" routerLink="/">🔥 Angular Firestarter</span>
+      <span class="logo" routerLink="/">🔥 Who killed who??</span>
 
       <span class="fill-space"></span>
       <div *ngIf="!(isHandset$ | async)">
-        <a mat-button routerLink="/kanban">🍱 Kanban Demo</a>
-        <a mat-button routerLink="/customers">⚡ SSR Demo</a>
+        <!-- <a mat-button routerLink="/kanban">🍱 Kanban Demo</a> -->
+        <!-- <a mat-button routerLink="/customers">⚡ SSR Demo</a> -->
 
         <a mat-button routerLink="/login" *ngIf="!(afAuth.authState | async)">🔑 Login</a>
         <a mat-button routerLink="/login" *ngIf="afAuth.authState | async as user" >
@@ -43,7 +43,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       
-      <mat-menu #menu="matMenu">
+      <!-- <mat-menu #menu="matMenu">
         <a mat-menu-item href="https://fireship.page.link/slack">
           <i>💬</i>
           <span>Chat on Slack</span>
@@ -61,8 +61,8 @@
           <i>📺</i>
           <span>Watch on the YouTube</span>
         </a>
-      </mat-menu>
-    </mat-toolbar>
+      </mat-menu> -->
+    </mat-toolbar> 
 
     <ng-content></ng-content>
 
