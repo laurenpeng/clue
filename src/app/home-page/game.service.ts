@@ -14,7 +14,7 @@ export class GameService {
     snapshot = false
     user = null
 
-    subscribeTo() {
+    subscribeToMessages() {
         this.subscription = this.db.collection('messages')
         this.db.collection('messages').doc('vtE7M6nkH81gJgS7jDoT').get().toPromise().then((x) => {
             console.log(x.data())
@@ -34,13 +34,10 @@ export class GameService {
 
                 })
             )
-        // if (!this.customers) {
-        //   this.subscription = this.db.collection('messages').valueChanges({idField: 'message'})
-        //   .subscribe(customers =>  {
-        //       console.log(customers)
-        //     this.customers = customers;
-        //   });
-        // }
+    }
+
+    subscribeToGames() {
+        return this.db.collection('games');
     }
 
     addData(text: string) {
@@ -51,6 +48,7 @@ export class GameService {
     }
 
     createGame(name: string) {
+        console.log("name", name)
         this.db.collection('games').doc(name).set({
             title: name, 
             full: false, 
@@ -64,12 +62,26 @@ export class GameService {
         return object;
     }
 
+    joinGame(game) {
+        console.log(game)
+        if (game.players.length >= 4) {
+            alert("Game is Full")
+        } else {
+            let full = false;
+            if (game.players.length >= 3)
+                full = true
+            this.db.collection('games').doc(game.title).set({
+                title: game.title, 
+                full: full, 
+                players: [...game.players, this.user] 
+            }) 
+        }
+    }
+
     dispose() {
         this.subscription.unsubscribe();
         this.game = null;
     }
-
-
 
     constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
        

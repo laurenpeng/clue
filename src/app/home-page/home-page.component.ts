@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import { GameService } from './game.service';
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-page',
@@ -9,34 +10,54 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent {
-  text = "";
-    
+  message = "";
+  gameTitle = "";
+  games = [];
+
   constructor(private db: AngularFirestore, 
     public gameService: GameService, 
     public userService: UserService) {
 
-    this.text = ""
+    this.message = ""
+    this.gameTitle = ""
+
+    this.games = []
   }
 
   ngOnInit() {
-
-    // this.customers = this.db.collection('customers').valueChanges({ idField: 'id' });
-
-    let x = this.gameService.subscribeTo();
-    console.log("sub",x)
-
-    x.subscribe()
-
+    let messages = this.gameService.subscribeToMessages();
+    messages.subscribe()
     this.userService.loadUser()
+
+    let games = this.gameService.subscribeToGames();
+    games.snapshotChanges()
+    .pipe(
+        map(change => {
+          this.games = change.map(this.gameService.documentToDomainObject)
+          console.log(this.games)
+        })
+    ).subscribe()
+    
   }
 
-  add() {
-    this.gameService.addData(this.text)
+  sendMessage() {
+    this.gameService.addData(this.message)
   }
 
-  createGame(name: string) {
-    this.gameService.createGame(name)
+  createGame() {
+    if (this.gameTitle === "") {
+      alert("Please Enter a Name first")
+      return;
+    }
+    this.gameService.createGame(this.gameTitle)
   }
 
+  clickCell(x: number, y: number) {
+    alert(`Clicked on ${x} - ${y}`)
+  }
 
+  joinGame(game) {
+    console.log(game)
+    this.gameService.joinGame(game)
+  }
 }

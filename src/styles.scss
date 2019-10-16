@@ -80,3 +80,16 @@ a {
     color: white;
     text-decoration: none;
 }
+
+.grid {
+    display: inline-grid;
+    grid-gap: 1px;
+    grid-template-columns: repeat(3, 1fr);
+    
+    div {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+    }
+}
+
