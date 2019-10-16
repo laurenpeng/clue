@@ -17,7 +17,6 @@ Firestarter is an Angular PWA powered by Firebase.
 
 1.  Run
 
-- `cd firestarter`
 - `npm install`
 
 
