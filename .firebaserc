@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "angular-voxer"
+    "prod": "foobar-clue",
+    "default": "foobar-clue"
   }
 }
