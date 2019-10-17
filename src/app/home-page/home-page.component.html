@@ -1,6 +1,7 @@
 
 <header>
     <h1>FooBar Clue</h1>
+    <h2>Hello {{user}}</h2>
     <form>
         If you write a new original message, it will alert everyone!: <input type="text" name="fname" [(ngModel)]="message"><br>
         <input type="submit" value="Submit" (click)="sendMessage()">
@@ -16,6 +17,8 @@
     <br/>
     <br/>
 
+    <h3>Click Cell to Advance Turn</h3>
+
     <div class="grid">
         <div (click)="clickCell(0,0)">0-0</div>
         <div (click)="clickCell(0,1)">0-1</div>
@@ -28,9 +31,14 @@
         <div (click)="clickCell(2,2)">2-2</div>  
     </div>
 
+    <h4 *ngIf="currentPlayer != ''">{{currentPlayer}}'s turn</h4>
+    <h2>{{banner}}</h2>
+
     <p *ngFor="let game of games">
         {{game.title}} with {{game.players.length}} # of players
         <button (click)="joinGame(game)">Join Game</button>
+        &nbsp;
+        <button (click)="closeGame(game)">Close Game</button>
     </p>
 </header>
 

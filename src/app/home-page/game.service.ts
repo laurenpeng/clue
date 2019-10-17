@@ -27,7 +27,6 @@ export class GameService {
                     if (this.snapshot) {
                         console.log(change.map(this.documentToDomainObject))
                         let test = change.map(this.documentToDomainObject)
-                        alert(test[0]['id'])
                     } else {
                         this.snapshot = true
                     }
@@ -64,18 +63,41 @@ export class GameService {
 
     joinGame(game) {
         console.log(game)
-        if (game.players.length >= 4) {
+        if (game.players.length >= 2) {
             alert("Game is Full")
         } else {
             let full = false;
-            if (game.players.length >= 3)
-                full = true
-            this.db.collection('games').doc(game.title).set({
-                title: game.title, 
-                full: full, 
-                players: [...game.players, this.user] 
-            }) 
+            if (game.players.length >= 1) {
+                this.db.collection('games').doc(game.title).set({
+                    title: game.title, 
+                    full: true, 
+                    players: [...game.players, this.user],
+                    turn: 0
+                }) 
+            } else {
+                this.db.collection('games').doc(game.title).set({
+                    title: game.title, 
+                    full: false, 
+                    players: [...game.players, this.user], 
+                    turn: null 
+                }) 
+            }
         }
+    }
+
+    nextTurn(game) {
+        this.db.collection('games').doc(game.title).set({
+            title: game.title, 
+            full: true, 
+            players: game.players, 
+            turn: (game.turn + 1) % 6 
+        })
+    }
+
+    closeGame(game) {
+        this.db.collection('games').doc(game.title).delete().then((data) => {
+            alert(`${game.title} has been closed`)
+        })
     }
 
     dispose() {
