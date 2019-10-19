@@ -81,15 +81,30 @@ a {
     text-decoration: none;
 }
 
-.grid {
-    display: inline-grid;
-    grid-gap: 1px;
-    grid-template-columns: repeat(3, 1fr);
-    
-    div {
-        width: 100px;
-        height: 100px;
-        background-color: mediumturquoise;
+.clue {
+    .flex-col {
+        display: flex;
+        flex: 1;
+        flex-direction: column
+    }
+
+    .flex-row {
+        display: flex;
+        flex: 1;
+        flex-direction: row
+    }
+
+    .grid {
+        display: inline-grid;
+        grid-gap: 1px;
+        grid-template-columns: repeat(3, 1fr);
+        
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: mediumturquoise;
+        }
     }
 }
+
 

@@ -66,7 +66,6 @@ export class GameService {
         if (game.players.length >= 2) {
             alert("Game is Full")
         } else {
-            let full = false;
             if (game.players.length >= 1) {
                 this.db.collection('games').doc(game.title).set({
                     title: game.title, 
@@ -90,7 +89,7 @@ export class GameService {
             title: game.title, 
             full: true, 
             players: game.players, 
-            turn: (game.turn + 1) % 6 
+            turn: (game.turn + 1) % (game.players.length)
         })
     }
 

@@ -1,45 +1,70 @@
-
 <header>
-    <h1>FooBar Clue</h1>
-    <h2>Hello {{user}}</h2>
-    <form>
-        If you write a new original message, it will alert everyone!: <input type="text" name="fname" [(ngModel)]="message"><br>
-        <input type="submit" value="Submit" (click)="sendMessage()">
-    </form>
-    <br/>
+    <div class="clue">
+        <h1>FooBar Clue</h1>
+        <div *ngIf="user === ''">
+            <h2>Hello. Please Log In to Start!
+            </h2>
+        </div>
+        <div *ngIf="user !== ''">
+            <h2>Hello {{user}}</h2>
+            <div class="flex-col">
+                <div *ngIf="!currentlyInGame" class="flex-col">
 
-    <form>
-        Enter Name of Game: <input type="text" name="fname" [(ngModel)]="gameTitle"><br>
-        <input type="submit" value="Create a Game" (click)="createGame()">
-    </form>
+                    <form>
+                        If you write a new original message, it will alert everyone!: <input type="text" name="fname"
+                            [(ngModel)]="message"><br>
+                        <button type="submit" value="Submit" (click)="sendMessage()">Submit</button>
+                    </form>
+                    <br />
 
-    <br/>
-    <br/>
-    <br/>
+                    <form>
+                        Enter Name of Game: <input type="text" name="fname" [(ngModel)]="gameTitle"><br>
+                        <button type="submit" value="Create a Game" (click)="createGame()">Create</button>
+                    </form>
 
-    <h3>Click Cell to Advance Turn</h3>
 
-    <div class="grid">
-        <div (click)="clickCell(0,0)">0-0</div>
-        <div (click)="clickCell(0,1)">0-1</div>
-        <div (click)="clickCell(0,2)">0-2</div>
-        <div (click)="clickCell(1,0)">1-0</div>
-        <div (click)="clickCell(1,1)">1-1</div>
-        <div (click)="clickCell(1,2)">1-2</div>
-        <div (click)="clickCell(2,0)">2-0</div>
-        <div (click)="clickCell(2,1)">2-1</div>
-        <div (click)="clickCell(2,2)">2-2</div>  
+                </div>
+
+                <br />
+                <br *ngIf="currentPlayer != undefined" />
+                <br *ngIf="currentPlayer != undefined" />
+
+                <div *ngIf="currentlyInGame" class="">
+                    <div *ngIf="currentPlayer != undefined">
+                        <h3>Click Cell to Advance Turn</h3>
+
+                        <div class="grid">
+                            <div (click)="clickCell(0,0)">0-0</div>
+                            <div (click)="clickCell(0,1)">0-1</div>
+                            <div (click)="clickCell(0,2)">0-2</div>
+                            <div (click)="clickCell(1,0)">1-0</div>
+                            <div (click)="clickCell(1,1)">1-1</div>
+                            <div (click)="clickCell(1,2)">1-2</div>
+                            <div (click)="clickCell(2,0)">2-0</div>
+                            <div (click)="clickCell(2,1)">2-1</div>
+                            <div (click)="clickCell(2,2)">2-2</div>
+                        </div>
+                    </div>
+
+                    <h4 *ngIf="currentPlayer != undefined">{{currentPlayer}}'s turn</h4>
+                    <h4 *ngIf="currentPlayer == undefined">The Game hasn't Started. Please Wait</h4>
+                    <h2>{{banner}}</h2>
+                </div>
+
+                <div *ngIf="currentlyInGame">
+                    Close current game
+                    <button (click)="closeGame(game)">Close Game</button>
+                </div>
+
+                <div *ngIf="!currentlyInGame">
+                    <p *ngFor="let game of games">
+                        {{game.title}} with {{game.players.length}} # of players
+                        <button (click)="joinGame(game)">Join Game</button>
+                        &nbsp;
+                        <button (click)="closeGame(game)">Close Game</button>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <h4 *ngIf="currentPlayer != ''">{{currentPlayer}}'s turn</h4>
-    <h2>{{banner}}</h2>
-
-    <p *ngFor="let game of games">
-        {{game.title}} with {{game.players.length}} # of players
-        <button (click)="joinGame(game)">Join Game</button>
-        &nbsp;
-        <button (click)="closeGame(game)">Close Game</button>
-    </p>
 </header>
-
-

@@ -55,6 +55,7 @@ export class HomePageComponent {
           });
           if (gamesIn.length == 0) {
             this.currentlyInGame = false
+            this.banner = "Join a game to start!"
           } else {
             this.currentlyInGame = true;
             this.game = gamesIn[0]
@@ -94,6 +95,9 @@ export class HomePageComponent {
   }
 
   joinGame(game) {
+    this.afAuth.user.subscribe((user) => {
+      this.user = user.email
+    })
     if (this.currentlyInGame) {
       this.banner = "Can't Join the game, already in a game"
       return
