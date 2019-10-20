@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/foobar-clue",
+    "public": "dist/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
