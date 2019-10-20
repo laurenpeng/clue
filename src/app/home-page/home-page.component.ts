@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from './user.service';
 import { GameService } from './game.service';
@@ -19,7 +20,7 @@ export class HomePageComponent {
   banner = ""
   game = null
   currentPlayer = ""
-
+  latestMessage = ""
   constructor(
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
@@ -32,15 +33,19 @@ export class HomePageComponent {
     this.games = []
     this.currentlyInGame = false
     this.banner = ""
-
+    this.latestMessage = ""
     this.afAuth.user.subscribe((user) => {
       this.user = user.email
     })
   }
 
   ngOnInit() {
-    let messages = this.gameService.subscribeToMessages();
-    messages.subscribe()
+    this.gameService.subscribeToMessages().snapshotChanges().pipe(
+      map((doc) => {
+        this.latestMessage = doc.payload.data()['message']
+      })
+    ).subscribe()
+    
     this.userService.loadUser()
 
     let games = this.gameService.subscribeToGames();
@@ -69,7 +74,7 @@ export class HomePageComponent {
   }
 
   sendMessage() {
-    this.gameService.addData(this.message)
+    this.gameService.writeMessage(this.message)
   }
 
   createGame() {
@@ -102,6 +107,7 @@ export class HomePageComponent {
       this.banner = "Can't Join the game, already in a game"
       return
     }
+    this.banner = `Joined Game: ${game.title}`
     this.gameService.joinGame(game)
   }
 

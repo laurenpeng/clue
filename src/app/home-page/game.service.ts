@@ -15,34 +15,20 @@ export class GameService {
     user = null
 
     subscribeToMessages() {
-        this.subscription = this.db.collection('messages')
-        this.db.collection('messages').doc('vtE7M6nkH81gJgS7jDoT').get().toPromise().then((x) => {
-            console.log(x.data())
-        })
-
-
-        return this.db.collection('messages').snapshotChanges()
-            .pipe(
-                map(change => {
-                    if (this.snapshot) {
-                        console.log(change.map(this.documentToDomainObject))
-                        let test = change.map(this.documentToDomainObject)
-                    } else {
-                        this.snapshot = true
-                    }
-
-                })
-            )
+        return this.db.collection('messages').doc('messages');
     }
 
     subscribeToGames() {
         return this.db.collection('games');
     }
 
-    addData(text: string) {
-        console.log(text)
-        this.db.collection('messages').doc(text).set({
-            message: this.user
+    writeMessage(text: string) {
+        this.db.collection('messages').doc("messages").set({
+            message: text
+        }).then((data) => {
+            console.log('wrote message', data)
+        }).catch((err) => {
+            console.log('error writing message', err)
         })
     }
 

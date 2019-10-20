@@ -82,6 +82,21 @@ a {
 }
 
 .clue {
+    .welcome {
+        border-bottom: solid;
+    }
+
+    .left {
+        flex: .25;
+        height: 100vh;
+        border-right-color: #e65100;
+        border-right: solid;
+    }
+    .right {
+        text-align: left;
+        padding-left: 5rem;
+    }
+
     .flex-col {
         display: flex;
         flex: 1;
@@ -91,7 +106,8 @@ a {
     .flex-row {
         display: flex;
         flex: 1;
-        flex-direction: row
+        flex-direction: row;
+        padding: 10px;
     }
 
     .grid {

@@ -6,63 +6,98 @@
             </h2>
         </div>
         <div *ngIf="user !== ''">
-            <h2>Hello {{user}}</h2>
-            <div class="flex-col">
-                <div *ngIf="!currentlyInGame" class="flex-col">
-
-                    <form>
-                        If you write a new original message, it will alert everyone!: <input type="text" name="fname"
-                            [(ngModel)]="message"><br>
-                        <button type="submit" value="Submit" (click)="sendMessage()">Submit</button>
-                    </form>
-                    <br />
-
-                    <form>
-                        Enter Name of Game: <input type="text" name="fname" [(ngModel)]="gameTitle"><br>
-                        <button type="submit" value="Create a Game" (click)="createGame()">Create</button>
-                    </form>
-
-
-                </div>
-
+            <div class="welcome">
+                <h2>Hello {{user}}</h2>
                 <br />
-                <br *ngIf="currentPlayer != undefined" />
-                <br *ngIf="currentPlayer != undefined" />
+                <br />
+            </div>
+            <div class="flex-row">
+                <div class="left">
+                    <div>
+                        <form>
 
-                <div *ngIf="currentlyInGame" class="">
-                    <div *ngIf="currentPlayer != undefined">
-                        <h3>Click Cell to Advance Turn</h3>
+                            Write a message!:
+                            <mat-form-field class="example-full-width">
+                                <input matInput placeholder="Hi!" name="message" value="" [(ngModel)]="message">
+                            </mat-form-field>
+                            <br>
+                            <button mat-button color="primary" type="submit" value="Submit"
+                                (click)="sendMessage()">Submit</button>
+                            <br />
+                            <h3>Latest Message:</h3>
+                            {{latestMessage}}
+                            <br />
+                            <br />
+                            <br />
+                            <br />
 
-                        <div class="grid">
-                            <div (click)="clickCell(0,0)">0-0</div>
-                            <div (click)="clickCell(0,1)">0-1</div>
-                            <div (click)="clickCell(0,2)">0-2</div>
-                            <div (click)="clickCell(1,0)">1-0</div>
-                            <div (click)="clickCell(1,1)">1-1</div>
-                            <div (click)="clickCell(1,2)">1-2</div>
-                            <div (click)="clickCell(2,0)">2-0</div>
-                            <div (click)="clickCell(2,1)">2-1</div>
-                            <div (click)="clickCell(2,2)">2-2</div>
-                        </div>
+                            <div *ngIf="currentlyInGame">
+                                Currently in game:
+                                <h3>{{game.title}}</h3>
+                                <br />
+                                There Are {{game.players.length}} players
+                            </div>
+
+                            <div *ngIf="!currentlyInGame">
+                                <div *ngFor="let game of games">
+                                    <p>
+                                        {{game.title}} with {{game.players.length}} # of players
+                                    </p>
+                                    <button mat-button color="primary" (click)="joinGame(game)">Join Game</button>
+                                    <button mat-button color="warn" (click)="closeGame(game)">Close Game</button>
+
+                                </div>
+                            </div>
+                        </form>
+                        <br />
                     </div>
-
-                    <h4 *ngIf="currentPlayer != undefined">{{currentPlayer}}'s turn</h4>
-                    <h4 *ngIf="currentPlayer == undefined">The Game hasn't Started. Please Wait</h4>
-                    <h2>{{banner}}</h2>
                 </div>
+                <div class="right flex-col">
+                    <div class="flex-col">
+                        <div *ngIf="!currentlyInGame" class="flex-col">
 
-                <div *ngIf="currentlyInGame">
-                    Close current game
-                    <button (click)="closeGame(game)">Close Game</button>
-                </div>
 
-                <div *ngIf="!currentlyInGame">
-                    <p *ngFor="let game of games">
-                        {{game.title}} with {{game.players.length}} # of players
-                        <button (click)="joinGame(game)">Join Game</button>
-                        &nbsp;
-                        <button (click)="closeGame(game)">Close Game</button>
-                    </p>
+                            <form>
+                                Enter Name of Game: <input type="text" name="fname" [(ngModel)]="gameTitle"><br>
+                                <button mat-button color="primary" type="submit" value="Create a Game"
+                                    (click)="createGame()">Create</button>
+                            </form>
+
+
+                        </div>
+
+                        <br />
+                        <br *ngIf="currentPlayer != undefined" />
+                        <br *ngIf="currentPlayer != undefined" />
+
+                        <div *ngIf="currentlyInGame" class="">
+                            <div *ngIf="currentPlayer != undefined">
+                                <h3>Click Cell to Advance Turn</h3>
+
+                                <div class="grid">
+                                    <div (click)="clickCell(0,0)">0-0</div>
+                                    <div (click)="clickCell(0,1)">0-1</div>
+                                    <div (click)="clickCell(0,2)">0-2</div>
+                                    <div (click)="clickCell(1,0)">1-0</div>
+                                    <div (click)="clickCell(1,1)">1-1</div>
+                                    <div (click)="clickCell(1,2)">1-2</div>
+                                    <div (click)="clickCell(2,0)">2-0</div>
+                                    <div (click)="clickCell(2,1)">2-1</div>
+                                    <div (click)="clickCell(2,2)">2-2</div>
+                                </div>
+                            </div>
+
+                            <h4 *ngIf="currentPlayer != undefined">{{currentPlayer}}'s turn</h4>
+                            <h4 *ngIf="currentPlayer == undefined">The Game hasn't Started. Please Wait</h4>
+                            <h2>{{banner}}</h2>
+                        </div>
+
+                        <div *ngIf="currentlyInGame">
+                            Close current game
+                            <button (click)="closeGame(game)">Close Game</button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
