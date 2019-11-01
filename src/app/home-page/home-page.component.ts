@@ -1,3 +1,5 @@
+import { PlaygroundService } from './playground.service';
+import { ActionService } from './action.service';
 import { Title } from '@angular/platform-browser';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from './user.service';
@@ -25,7 +27,9 @@ export class HomePageComponent {
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
     public gameService: GameService,
-    public userService: UserService) {
+    public userService: UserService, 
+    public actionsService: ActionService, 
+    public playgroundService: PlaygroundService) {
 
     this.message = ""
     this.gameTitle = ""
@@ -39,7 +43,7 @@ export class HomePageComponent {
     })
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.gameService.subscribeToMessages().snapshotChanges().pipe(
       map((doc) => {
         this.latestMessage = doc.payload.data()['message']

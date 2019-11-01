@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as rooms from './constants';
+import './constants';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ActionService {
+
+    user = null 
 
     constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
        
@@ -20,7 +22,7 @@ export class ActionService {
     }
 
     possibleMoves(currentRoom) {
-        switch(rooms) {
+        switch(currentRoom) {
             case STUDY: 
                 return [HALL_A, HALL_C, KITCHEN]
             case HALL:
