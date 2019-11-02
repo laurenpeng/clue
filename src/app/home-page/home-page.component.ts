@@ -7,6 +7,7 @@ import { GameService } from './game.service';
 import { Component } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import * as _ from './constants';
 
 @Component({
   selector: 'app-home-page',
@@ -23,12 +24,35 @@ export class HomePageComponent {
   game = null
   currentPlayer = {}
   latestMessage = ""
+
+  nameStudy = ""
+  nameHall = ""
+  nameLounge = ""
+  nameLibrary = ""
+  nameBilliard = ""
+  nameDining = ""
+  nameConservatory = ""
+  nameBallRoom = ""
+  nameKitchen = ""
+  nameA = ""
+  nameB = ""
+  nameC = ""
+  nameD = ""
+  nameE = ""
+  nameF = ""
+  nameG = ""
+  nameH = ""
+  nameI = ""
+  nameJ = ""
+  nameK = ""
+  nameL = ""
+
   constructor(
     private db: AngularFirestore,
     private afAuth: AngularFireAuth,
     public gameService: GameService,
-    public userService: UserService, 
-    public actionsService: ActionService, 
+    public userService: UserService,
+    public actionsService: ActionService,
     public playgroundService: PlaygroundService) {
 
     this.message = ""
@@ -43,13 +67,13 @@ export class HomePageComponent {
     })
   }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.gameService.subscribeToMessages().snapshotChanges().pipe(
       map((doc) => {
         this.latestMessage = doc.payload.data()['message']
       })
     ).subscribe()
-    
+
     this.userService.loadUser()
 
     let games = this.gameService.subscribeToGames();
@@ -70,8 +94,7 @@ export class HomePageComponent {
             this.game = gamesIn[0]
             this.currentPlayer = this.game.players[this.game.turn]
           }
-          // console.log(this.games)
-          // console.log(this.currentlyInGame)
+          this.setPlayerLocations();
         })
       ).subscribe()
 
@@ -97,7 +120,7 @@ export class HomePageComponent {
         if (possibleMoves.includes(move)) {
           this.banner = `Made your move to ${move}`
           this.gameService.movePlayer(move, this.currentPlayer, this.game);
-          this.gameService.nextTurn(this.game);  
+          this.gameService.nextTurn(this.game);
         } else {
           this.banner = `Cannot move to ${move}`
         }
@@ -128,5 +151,102 @@ export class HomePageComponent {
 
   isMyTurn() {
     return this.game.players[this.game.turn].name === this.user;
+  }
+
+  setPlayerLocations() {
+    this.nameStudy = ""
+    this.nameHall = ""
+    this.nameLounge = ""
+    this.nameLibrary = ""
+    this.nameBilliard = ""
+    this.nameDining = ""
+    this.nameConservatory = ""
+    this.nameBallRoom = ""
+    this.nameKitchen = ""
+    this.nameA = ""
+    this.nameB = ""
+    this.nameC = ""
+    this.nameD = ""
+    this.nameE = ""
+    this.nameF = ""
+    this.nameG = ""
+    this.nameH = ""
+    this.nameI = ""
+    this.nameJ = ""
+    this.nameK = ""
+    this.nameL = ""
+
+    this.game.players.forEach((player) => {
+      console.log(player)
+      switch (player.location) {
+        case _.STUDY:
+          this.nameStudy = player.character
+          break;
+        case _.HALL:
+          this.nameHall = player.character
+          break;
+        case _.LOUNGE:
+          this.nameLounge = player.character
+          break;
+        case _.LIBRARY:
+          this.nameLibrary = player.character
+          break;
+        case _.BILLARD:
+          this.nameBilliard = player.character
+          break;
+        case _.DINING:
+          this.nameDining = player.character
+          break;
+        case _.CONSERVATORY:
+          this.nameConservatory = player.character
+          break;
+        case _.BALL_ROOM:
+          this.nameBallRoom = player.character
+          break;
+        case _.KITCHEN:
+          this.nameKitchen = player.character
+          break;
+        case _.HALL_A:
+          this.nameA = player.character
+          break;
+        case _.HALL_B:
+          this.nameB = player.character
+          break;
+        case _.HALL_C:
+          this.nameC = player.character
+          break;
+        case _.HALL_D:
+          this.nameD = player.character
+          break;
+        case _.HALL_E:
+          this.nameE = player.character
+          break;
+        case _.HALL_F:
+          this.nameF = player.character
+          break;
+        case _.HALL_G:
+          this.nameG = player.character
+          break;
+        case _.HALL_H:
+          this.nameH = player.character
+          break;
+        case _.HALL_I:
+          this.nameI = player.character
+          break;
+        case _.HALL_J:
+          this.nameJ = player.character
+          break;
+        case _.HALL_K:
+          this.nameK = player.character
+          break;
+        case _.HALL_L:
+          this.nameL = player.character
+          break;
+        default:
+          console.log("Awk Broken");
+          break;
+      }
+    })
+
   }
 }

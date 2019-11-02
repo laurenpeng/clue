@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as rooms from './constants';
+import * as _ from './constants';
 const playersToPlay = 1
 
 @Injectable({
@@ -44,7 +44,12 @@ export class GameService {
         this.db.collection('games').doc(name).set({
             title: name, 
             full, 
-            players: [{name: this.user, location: rooms.STUDY}],
+            players: [
+                {
+                    name: this.user, 
+                    location: _.STUDY, // TODO dont harcode
+                    character: _.MISS_SCARLET // TODO dont harcode
+                }],
             turn: 0
         })
     }
@@ -66,7 +71,8 @@ export class GameService {
                     full: true, 
                     players: [...game.players, {
                         name: this.user, 
-                        location: rooms.STUDY
+                        location: _.STUDY, // TODO dont harcode
+                        character: _.MISS_SCARLET // TODO dont harcode
                     }],
                     turn: 0
                 }) 
@@ -76,7 +82,8 @@ export class GameService {
                     full: false, 
                     players: [...game.players, {
                         name: this.user, 
-                        location: rooms.STUDY
+                        location: _.STUDY, // TODO dont harcode
+                        character: _.MISS_SCARLET // TODO dont harcode
                     }], 
                     turn: null 
                 }) 

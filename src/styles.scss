@@ -115,26 +115,26 @@ a {
         grid-gap: 1px;
         grid-template-columns: repeat(5, 1fr);
         text-align: center;
-        
+
         .spacer {
-            height: 100px;
-            width: 100px;
+            height: 150px;
+            width: 150px;
             opacity: 0;
         }
 
         .hallway {
-            height: 50px;
+            height: 75px;
             align-self: center;
         }
 
         .hallway-vert {
-            width: 50px;
+            width: 75px;
             justify-self: center;
         }
 
         div {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             background-color: mediumturquoise;
         }
     }
