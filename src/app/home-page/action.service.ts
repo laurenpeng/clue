@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import './constants';
+import * as rooms from './constants';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +15,6 @@ export class ActionService {
     constructor(private db: AngularFirestore, private afAuth: AngularFireAuth) {
        
         this.afAuth.user.subscribe((user) => {
-            console.log("This email is logged in", user.email)
             this.user = user.email
         })
         
@@ -23,50 +22,50 @@ export class ActionService {
 
     possibleMoves(currentRoom) {
         switch(currentRoom) {
-            case STUDY: 
-                return [HALL_A, HALL_C, KITCHEN]
-            case HALL:
-                return [HALL_A, HALL_B, HALL_D]
-            case LOUNGE:
-                return [HALL_B, CONSERVATORY, HALL_E]
-            case LIBRARY:
-                return [HALL_C, HALL_F, HALL_H]
-            case BILLARD:
-                return [HALL_D, HALL_F, HALL_G, HALL_I]
-            case DINING:
-                return [HALL_E, HALL_G, HALL_J]
-            case CONSERVATORY:
-                return [HALL_H, HALL_K, LOUNGE]
-            case BALL_ROOM:
-                return [HALL_I, HALL_K, HALL_L]
-            case KITCHEN:
-                return [HALL_J, HALL_L, STUDY]
-            case HALL_A:
-                return [STUDY, HALL]
-            case HALL_B:
-                return [HALL, LOUNGE]
-            case HALL_C:
-                return [STUDY, LIBRARY]
-            case HALL_D:
-                return [HALL, BILLARD]
-            case HALL_E:
-                return [LOUNGE, DINING]
-            case HALL_F:
-                return [LIBRARY, BILLARD]
-            case HALL_G:
-                return [BILLARD, DINING]
-            case HALL_H:
-                return [LIBRARY, CONSERVATORY]
-            case HALL_I:
-                return [BILLARD, BALL_ROOM]
-            case HALL_J:
-                return [DINING, KITCHEN]
-            case HALL_K:
-                return [CONSERVATORY, BALL_ROOM]
-            case HALL_L:
-                return [BALL_ROOM, KITCHEN]
+            case rooms.STUDY: 
+                return [rooms.HALL_A, rooms.HALL_C, rooms.KITCHEN]
+            case rooms.HALL:
+                return [rooms.HALL_A, rooms.HALL_B, rooms.HALL_D]
+            case rooms.LOUNGE:
+                return [rooms.HALL_B, rooms.CONSERVATORY, rooms.HALL_E]
+            case rooms.LIBRARY:
+                return [rooms.HALL_C, rooms.HALL_F, rooms.HALL_H]
+            case rooms.BILLARD:
+                return [rooms.HALL_D, rooms.HALL_F, rooms.HALL_G,rooms. HALL_I]
+            case rooms.DINING:
+                return [rooms.HALL_E, rooms.HALL_G, rooms.HALL_J]
+            case rooms.CONSERVATORY:
+                return [rooms.HALL_H, rooms.HALL_K, rooms.LOUNGE]
+            case rooms.BALL_ROOM:
+                return [rooms.HALL_I, rooms.HALL_K, rooms.HALL_L]
+            case rooms.KITCHEN:
+                return [rooms.HALL_J, rooms.HALL_L, rooms.STUDY]
+            case rooms.HALL_A:
+                return [rooms.STUDY, rooms.HALL]
+            case rooms.HALL_B:
+                return [rooms.HALL, rooms.LOUNGE]
+            case rooms.HALL_C:
+                return [rooms.STUDY, rooms.LIBRARY]
+            case rooms.HALL_D:
+                return [rooms.HALL, rooms.BILLARD]
+            case rooms.HALL_E:
+                return [rooms.LOUNGE, rooms.DINING]
+            case rooms.HALL_F:
+                return [rooms.LIBRARY, rooms.BILLARD]
+            case rooms.HALL_G:
+                return [rooms.BILLARD, rooms.DINING]
+            case rooms.HALL_H:
+                return [rooms.LIBRARY, rooms.CONSERVATORY]
+            case rooms.HALL_I:
+                return [rooms.BILLARD, rooms.BALL_ROOM]
+            case rooms.HALL_J:
+                return [rooms.DINING, rooms.KITCHEN]
+            case rooms.HALL_K:
+                return [rooms.CONSERVATORY, rooms.BALL_ROOM]
+            case rooms.HALL_L:
+                return [rooms.BALL_ROOM, rooms.KITCHEN]
             default: 
-                alert("Awk Broken");
+                console.log("Awk Broken");
         }
     }
 

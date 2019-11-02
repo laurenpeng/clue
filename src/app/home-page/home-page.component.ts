@@ -21,7 +21,7 @@ export class HomePageComponent {
   user = ""
   banner = ""
   game = null
-  currentPlayer = ""
+  currentPlayer = {}
   latestMessage = ""
   constructor(
     private db: AngularFirestore,
@@ -59,7 +59,7 @@ export class HomePageComponent {
           this.games = change.map(this.gameService.documentToDomainObject)
           let gamesIn = this.games.filter((game) => {
             return game.players.filter((player) => {
-              return player === this.user;
+              return player.name === this.user;
             }).length !== 0
           });
           if (gamesIn.length == 0) {
@@ -70,8 +70,8 @@ export class HomePageComponent {
             this.game = gamesIn[0]
             this.currentPlayer = this.game.players[this.game.turn]
           }
-          console.log(this.games)
-          console.log(this.currentlyInGame)
+          // console.log(this.games)
+          // console.log(this.currentlyInGame)
         })
       ).subscribe()
 
@@ -90,16 +90,22 @@ export class HomePageComponent {
     this.gameService.createGame(this.gameTitle)
   }
 
-  clickCell(x: number, y: number) {
+  clickCell(move: string) {
+    let possibleMoves = this.actionsService.possibleMoves(this.currentPlayer['location'])
     if (this.currentlyInGame) {
       if (this.isMyTurn()) {
-        this.banner = `Made your move on cell ${x} ${y}`
-        this.gameService.nextTurn(this.game);
+        if (possibleMoves.includes(move)) {
+          this.banner = `Made your move to ${move}`
+          this.gameService.movePlayer(move, this.currentPlayer, this.game);
+          this.gameService.nextTurn(this.game);  
+        } else {
+          this.banner = `Cannot move to ${move}`
+        }
       } else {
         this.banner = `Not your turn`
       }
     } else {
-      this.banner = `Not in a game but clicked on cell ${x} ${y}`
+      this.banner = `Not in a game but clicked on ${move}`
     }
   }
 
@@ -121,6 +127,6 @@ export class HomePageComponent {
   }
 
   isMyTurn() {
-    return this.game.players[this.game.turn] === this.user;
+    return this.game.players[this.game.turn].name === this.user;
   }
 }

@@ -67,28 +67,44 @@
                         </div>
 
                         <br />
-                        <br *ngIf="currentPlayer != undefined" />
-                        <br *ngIf="currentPlayer != undefined" />
+                        <br *ngIf="currentPlayer.name != undefined" />
+                        <br *ngIf="currentPlayer.name != undefined" />
 
                         <div *ngIf="currentlyInGame" class="">
                             <div *ngIf="currentPlayer != undefined">
                                 <h3>Click Cell to Advance Turn</h3>
-
+                                <h3>You are currently in the {{currentPlayer.location}}</h3>
                                 <div class="grid">
-                                    <div (click)="clickCell(0,0)">0-0</div>
-                                    <div (click)="clickCell(0,1)">0-1</div>
-                                    <div (click)="clickCell(0,2)">0-2</div>
-                                    <div (click)="clickCell(1,0)">1-0</div>
-                                    <div (click)="clickCell(1,1)">1-1</div>
-                                    <div (click)="clickCell(1,2)">1-2</div>
-                                    <div (click)="clickCell(2,0)">2-0</div>
-                                    <div (click)="clickCell(2,1)">2-1</div>
-                                    <div (click)="clickCell(2,2)">2-2</div>
+                                    <div (click)="clickCell('Study')">Study</div>
+                                    <div class="hallway" (click)="clickCell('Hall A')">A</div>
+                                    <div (click)="clickCell('Hall')">Hall</div>
+                                    <div class="hallway" (click)="clickCell('Hall B')">B</div>
+                                    <div (click)="clickCell('Lounge')">Lounge</div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall C')">C</div>
+                                    <div class=spacer></div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall D')">D</div>
+                                    <div class=spacer></div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall E')">E</div>
+                                    <div (click)="clickCell('Library')">Library</div>
+                                    <div class="hallway" (click)="clickCell('Hall F')">F</div>
+                                    <div (click)="clickCell('Billiard')">Billiard</div>
+                                    <div class="hallway" (click)="clickCell('Hall G')">G</div>
+                                    <div (click)="clickCell('Dining')">Dining</div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall H')">H</div>
+                                    <div class=spacer></div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall I')">I</div>
+                                    <div class=spacer></div>
+                                    <div class="hallway-vert" (click)="clickCell('Hall J')">J</div>
+                                    <div (click)="clickCell('Conservatory')">Conservatory</div>
+                                    <div class="hallway" (click)="clickCell('Hall K')">K</div>
+                                    <div (click)="clickCell('Ball Room')">Ball Room</div>
+                                    <div class="hallway" (click)="clickCell('Hall L')">L</div>
+                                    <div (click)="clickCell('Kitchen')">Kitchen</div>
                                 </div>
                             </div>
 
-                            <h4 *ngIf="currentPlayer != undefined">{{currentPlayer}}'s turn</h4>
-                            <h4 *ngIf="currentPlayer == undefined">The Game hasn't Started. Please Wait</h4>
+                            <h4 *ngIf="currentPlayer.name != undefined">{{currentPlayer.name}}'s turn</h4>
+                            <h4 *ngIf="currentPlayer.name == undefined">The Game hasn't Started. Please Wait</h4>
                             <h2>{{banner}}</h2>
                         </div>
 
